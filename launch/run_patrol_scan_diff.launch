@@ -1,7 +1,4 @@
 <launch>
-    <!-- ===================================================================================== -->
-    <!-- |    模擬/實機 巡邏任務啟動檔 (v1.2 - 實機優化版)                               | -->
-    <!-- ===================================================================================== -->
 
     <!-- 參數定義 -->
     <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
@@ -47,7 +44,7 @@
 
     <!--  啟動我們的「Costmap 巡邏任務指揮中心」腳本 -->
     <!-- 增加 10 秒延遲，確保 move_base 和 amcl 有足夠時間初始化 -->
-    <node name="patrol_manager_costmap" pkg="blender_map_project" type="patrol_manager.py" 
+    <node name="patrol_manager_costmap" pkg="blender_map_project" type="patrol_manager_scan_diff.py" 
           output="screen" launch-prefix="bash -c 'sleep 10; $0 $@' "/>
 
 </launch>
