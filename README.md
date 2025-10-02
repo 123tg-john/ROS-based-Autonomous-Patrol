@@ -42,7 +42,9 @@
 * Python 3.8+
 * PyTorch
 
-#### **安裝步驟**
+#### **初始環境設定**
+
+在開始前，請依照以下三個核心步驟完成專案的下載與編譯。
 
 1.  **Clone 專案庫**:
     ```bash
@@ -52,6 +54,7 @@
 
 2.  **安裝 Python 依賴套件**:
     ```bash
+    # 進入剛 Clone 下來的專案資料夾
     cd [你的專案名稱]
     pip install -r requirements.txt
     ```
@@ -63,14 +66,23 @@
     source devel/setup.bash
     ```
 
-## 如何運行 (How to Run)
+## 專案結構與檔案說明
 
-#### **1. 啟動模擬環境中的巡邏任務**
+本專案已將各主要功能的詳細說明，分別放置於對應的資料夾中。在您完成上述安裝步驟後，建議您瀏覽以下資料夾內的 `README.md` 檔案，以深入了解其內容與用途：
+
+-   `launch/`: 包含所有用於啟動模擬或訓練的 `.launch` 檔案。
+-   `scripts/`: 包含專案核心功能的 Python 腳本 (ROS 節點)。
+-   `maps/` & `worlds/`: 包含 2D 地圖、3D 模型與 Gazebo 環境檔案。
+-   `stage_1/` & `stage_2/`: 包含各階段訓練好的模型檔案。
+
+## 如何運行模擬 (How to Run the Simulation)
+
+在您完成專案的安裝與編譯後，要啟動完整的自主巡邏模擬任務非常簡單。整個流程主要分為兩個步驟：首先是確保 3D 地圖模型被 Gazebo 模擬器找得到，其次是執行我們提供的一鍵啟動 `launch` 檔。
+
+首先，請確保本專案提供的 3D 地圖模型檔案已放置於正確的路徑。您需要將專案中的模型資料夾（例如 `blender_map_project` 整個資料夾）完整複製到您家目錄 (`Home`) 底下的 `.gazebo/models/` 資料夾中。請注意，`.gazebo` 是一個隱藏資料夾，在檔案總管中您可能需要按下 `Ctrl + H` 才能看見它。
+
+完成模型檔案的放置後，您就可以透過 `roslaunch` 指令來執行完整的巡邏模擬任務了。請打開一個新的終端機，並執行以下指令：
 
 ```bash
-# 啟動 Gazebo 模擬器與 Rviz
-roslaunch [你的專案名稱] turtlebot3_world.launch
-
-# 啟動已經訓練好的 Agent 來執行巡邏
-roslaunch [你的專案名稱] patrol_simulation.launch model_name:=[你要載入的模型名稱]
-
+# 此處以啟動「代價地圖法」的模擬為例
+roslaunch [你的專案名稱] run_patrol_costmap.launch
