@@ -4,7 +4,6 @@
 import rospy
 import rospkg
 import os
-# import yaml  <- MODIFIED: 不再需要 yaml
 import numpy as np
 import math
 import time
@@ -59,11 +58,6 @@ class PatrolManager:
         rospack = rospkg.RosPack()
         pkg_path = rospack.get_path('blender_map_project')
         
-        # --- MODIFIED: 移除 YAML 檔案讀取邏輯 ---
-        # areas_yaml_path = ...
-        # try: with open(...) ...
-        # self.patrol_areas = ...
-        # 以上區塊已被移除
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         rospy.loginfo(f"--- 使用的計算設備: {self.device} ---")
@@ -82,8 +76,6 @@ class PatrolManager:
         self.pub_markers = rospy.Publisher("/patrol_visuals", MarkerArray, queue_size=1)
         self.sub_odom = rospy.Subscriber("/odom", Odometry, self._odom_callback)
         self.sub_scan = rospy.Subscriber("/scan", LaserScan, self._scan_callback)
-        
-        # --- MODIFIED: 新增 RViz "2D Nav Goal" 訂閱者 ---
         self.sub_rviz_goal = rospy.Subscriber("/move_base_simple/goal", PoseStamped, self._rviz_goal_callback)
 
         self.anomaly_model_name = "anomaly_box"; self.goal_model_name = "visual_goal"; self.anomaly_spawned = False
@@ -151,7 +143,6 @@ class PatrolManager:
         
         rospy.loginfo("--- 指揮中心已關閉 ---")
 
-    # --- 以下的既有函式大多保持不變 ---
 
     def _load_sac_model(self, model_dir, model_name, policy_class, state_dim, action_dim):
         rospy.loginfo(f"正在載入 {model_name}...")
@@ -364,7 +355,6 @@ class PatrolManager:
     def _publish_patrol_markers(self, area_id, area_info, waypoints, current_waypoint_index=-1):
         marker_array = MarkerArray()
         
-        # MODIFIED: Marker類型從LINE_STRIP改為CUBE，以顯示實心方塊
         box_marker = Marker()
         box_marker.header.frame_id = "map"
         box_marker.header.stamp = rospy.Time.now()
@@ -390,7 +380,6 @@ class PatrolManager:
         
         marker_array.markers.append(box_marker)
         
-        # --- 航點與標籤的顯示邏輯保持不變 ---
         for i, wp in enumerate(waypoints):
             wp_marker = Marker(); wp_marker.header.frame_id = "map"; wp_marker.header.stamp = rospy.Time.now(); wp_marker.ns = "waypoints"; wp_marker.id = i + 1; wp_marker.type = Marker.SPHERE; wp_marker.action = Marker.ADD
             wp_marker.pose.position.x, wp_marker.pose.position.y, wp_marker.pose.position.z = wp[0], wp[1], 0.1
