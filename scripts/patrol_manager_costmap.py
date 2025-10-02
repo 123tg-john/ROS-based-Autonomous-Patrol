@@ -15,7 +15,7 @@ import tf
 import sys
 
 # ROS 訊息與服務
-from std_msgs.msg import Float32 # (+) 新增：用於發佈異常分數
+from std_msgs.msg import Float32 
 from geometry_msgs.msg import Twist, Pose, Quaternion, Point
 from sensor_msgs.msg import LaserScan
 from nav_msgs.msg import Odometry, OccupancyGrid
