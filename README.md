@@ -28,7 +28,7 @@
 
 本系統由前端使用者介面、ROS 後端系統，以及物理/模擬環境三大部分組成，透過 WebSocket 進行通訊。
 
-![系統架構圖](<img width="773" height="929" alt="模擬流程圖" src="https://github.com/user-attachments/assets/686722cd-ccec-47d8-9cc9-3122ca555cc9" />)
+![系統架構圖]([<img width="773" height="929" alt="模擬流程圖" src="https://github.com/user-attachments/assets/686722cd-ccec-47d8-9cc9-3122ca555cc9" />](https://github.com/123tg-john/ROS-based-Autonomous-Patrol/blob/main/assets/%E5%B0%88%E9%A1%8C%E5%9C%963.1.drawio.png?raw=true))
 
 *<p align="center">圖 1: 系統整體架構圖</p>*
 
