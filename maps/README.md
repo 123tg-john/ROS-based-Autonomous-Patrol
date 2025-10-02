@@ -26,6 +26,15 @@
 4.  找到並進入 `.gazebo/models/` 資料夾，沒有找到可以自己創。
 5.  將本專案提供的模型資料夾完整複製到此處。
 
+### Gazebo 世界檔 (`.world`)
+
+`.world` 檔案是用於 `roslaunch` 指令中，可以直接啟動一個包含特定地圖模型、光照和其他物理設定的 Gazebo 模擬環境。您通常會在專案的 `launch` 資料夾中看到它們被引用。
+
+```xml
+<include file="$(find gazebo_ros)/launch/empty_world.launch">
+  <arg name="world_name" value="$(find your_package_name)/worlds/your_map.world"/>
+</include>
+###
 ### 2D 地圖檔 (.png & .yaml)
 
 這兩個檔案是 ROS Navigation Stack 中 `map_server` 節點使用的標準地圖格式，主要用於 **RViz 中的 2D 地圖視覺化**與 **AMCL 定位**。
@@ -45,12 +54,5 @@
 <node name="map_server" pkg="map_server" type="map_server" args="$(find your_package_name)/maps/your_map.yaml" />
 
 
-### Gazebo 世界檔 (`.world`)
 
-`.world` 檔案是用於 `roslaunch` 指令中，可以直接啟動一個包含特定地圖模型、光照和其他物理設定的 Gazebo 模擬環境。您通常會在專案的 `launch` 資料夾中看到它們被引用。
-
-```xml
-<include file="$(find gazebo_ros)/launch/empty_world.launch">
-  <arg name="world_name" value="$(find your_package_name)/worlds/your_map.world"/>
-</include>
 
