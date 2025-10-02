@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="my_blender_world">
+    <!-- 加入太陽光 -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    
+    <!-- 加入您的牆壁模型 -->
+    <include>
+      <uri>model://my_building</uri> <!-- 請替換為您實際的模型資料夾名稱 -->
+      <name>my_office_building</name>
+      <!-- 
+        調整模型位置和角度，使其與地圖一致。
+        將 Yaw (繞 Z 軸旋轉) 設為 1.5707 弧度 (即 90 度)。
+      -->
+      <pose>0 0 0 0 0 0</pose> 
+    </include>
+    
+    <!-- 設定 Gazebo GUI 的初始相機視角 -->
+    <gui>
+      <camera name="user_camera">
+        <pose>0 0 15 0 1.5707 0</pose> 
+      </camera>
+    </gui>
+    
+  </world>
+</sdf>
+
