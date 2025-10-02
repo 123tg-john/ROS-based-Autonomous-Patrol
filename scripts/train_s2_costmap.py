@@ -1,19 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-================================================================================================
-ROS 自主巡邏機器人 - 深度強化學習訓練框架 (v41.1 - 監控增強版)
-================================================================================================
-- ★★★ 核心修改 ★★★: 根據使用者建議，新增了「明確判斷計數器」功能。
-                 現在，程式會在每個回合結束時，回報 Agent 輸出高信心分數 (High)
-                 和低信心分數 (Low) 的次數，以便更精準地分析 Agent 的決策傾向。
-- 初始化: 建立 ROS 節點，並與 Gazebo 模擬環境 (`TurtleBot3EnvStage3`) 進行連接。
-- 模型定義: 定義了 SAC 演算法所需的神經網路結構。
-- 智慧啟動: 實現了複雜的啟動邏輯，可選擇遷移學習、強制恢復或斷點續訓。
-- 進階訓練策略: 整合了學習率排程等技術。
-- 全方位監控: 使用 TensorBoard 記錄詳細指標，並透過 ROS Topic 發佈 KPI。
-"""
 
 # --- 核心模組與函式庫引入 ---
 import rospy
@@ -243,7 +230,6 @@ if __name__ == '__main__':
     BATCH_SIZE = 1024
     RANDOM_STEPS_WARMUP = 2000
     
-    # ★★★ 新增：判斷計數器的閾值 ★★★
     HIGH_SCORE_THRESHOLD = 0.8  # 分數高於此值，視為「明確判斷為異常」
     LOW_SCORE_THRESHOLD = 0.2   # 分數低於此值，視為「明確判斷為安全」
     
@@ -337,7 +323,6 @@ if __name__ == '__main__':
             ep_angular_jerks = [] 
             last_angular_vel_action = 0.0
             
-            # ★★★ 新增：初始化判斷計數器 ★★★
             high_score_count = 0
             low_score_count = 0
             
@@ -370,7 +355,6 @@ if __name__ == '__main__':
                 ep_anomaly_score.append(anomaly_score)
                 total_steps += 1
 
-                # ★★★ 新增：更新判斷計數器 ★★★
                 if anomaly_score > HIGH_SCORE_THRESHOLD:
                     high_score_count += 1
                 elif anomaly_score < LOW_SCORE_THRESHOLD:
@@ -406,11 +390,9 @@ if __name__ == '__main__':
             writer.add_scalar('kpi/success_rate_moving_avg_100', current_success_rate, ep)
             if ep_anomaly_score:
                 writer.add_scalar('metrics/avg_anomaly_score', np.mean(ep_anomaly_score), ep)
-                # ★★★ 新增：將計數結果寫入 TensorBoard ★★★
                 writer.add_scalar('metrics/high_score_count', high_score_count, ep)
                 writer.add_scalar('metrics/low_score_count', low_score_count, ep)
 
-            # ★★★ 更新：增強終端機日誌輸出 ★★★
             avg_score_this_ep = np.mean(ep_anomaly_score) if ep_anomaly_score else 0.0
             rospy.loginfo(f"Ep: {ep}, Reward: {ep_reward:.2f}, Steps: {step+1}, AvgScore: {avg_score_this_ep:.2f}, "
                           f"High: {high_score_count}, Low: {low_score_count}, "
