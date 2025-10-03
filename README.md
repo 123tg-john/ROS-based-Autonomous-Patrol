@@ -49,7 +49,7 @@
 1.  **Clone 專案庫**:
     ```bash
     cd ~/catkin_ws/src
-    git clone [你的專案 Git 連結]
+    git clone [專案 Git 連結]
     ```
 
 2.  **安裝 Python 依賴套件**:
