@@ -10,7 +10,7 @@
 
 ## 系統展示 (Demonstration)
 
-[![專案展示影片](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID/0.jpg)](https://youtu.be/4cRR984sirc)
+[![專案展示影片](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID/0.jpg)](https://youtu.be/ZF6Ui-NO0R8)
 *<p align="center">點擊圖片觀看實機操作展示影片</p>*
 
 
